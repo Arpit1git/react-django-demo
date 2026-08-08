@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-
+import {useAuth} from '../context/AuthContext.jsx'
 
 const Signup = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const {login} = useAuth();
+
 
     const [formData, setFormData] = useState(
     {  username: '',
@@ -27,8 +29,9 @@ const handleSubmit = async  (e)=>{
 
      try{
     
-    const req = await fetch("http://127.0.0.1:8000/api/login/",{
+    const req = await fetch("http://127.0.0.1:8000/api/signup/",{
        method: 'POST',
+      //  credentials: 'include', 
        headers: {
           "Content-Type": "application/json",
         },
@@ -37,12 +40,13 @@ const handleSubmit = async  (e)=>{
 
     const data = await req.json()
 
-   if (!req.status) {
+   if (!req.ok) {
         setError(data.error || "Signup failed");
         return;
       }
 
     console.log(data);
+    login(data.user['username'],data.token)
     navigate('/login')
 
 }catch(error){  
@@ -61,7 +65,6 @@ const handleformChange = (e) => {
 
   return (
    <>
-     
 
      <form
       onSubmit={handleSubmit}

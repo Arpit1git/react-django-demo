@@ -29,7 +29,7 @@ const handleSubmit = async  (e)=>{
 
      try{
     
-    const req = await fetch("http://127.0.0.1:8000/api/signup/",{
+    const req = await fetch(`${import.meta.env.VITE_API_URL}/signup/`,{
        method: 'POST',
       //  credentials: 'include', 
        headers: {
@@ -47,7 +47,7 @@ const handleSubmit = async  (e)=>{
 
     console.log(data);
     login(data.user['username'],data.token)
-    navigate('/login')
+    navigate('/home')
 
 }catch(error){  
      console.error("Network error:", error);

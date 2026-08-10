@@ -7,9 +7,18 @@ import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
+const getStoredUser = () => {
+    try {
+        const item = localStorage.getItem('user');
+        return item ? JSON.parse(item) : null;
+    } catch (error) {
+        return null;
+    }
+};
+
 export const AuthProvider = ({children})=>{
       
-    const [user, setuser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+    const [user, setuser] = useState(getStoredUser());
     const [msg, setmsg] = useState(null);
     const [token, setToken] = useState(
     localStorage.getItem('token') || null
@@ -27,7 +36,7 @@ export const AuthProvider = ({children})=>{
 
  const logout = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/logout/", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/logout/`, {
         method: "POST",
         headers: {
           "Authorization": `Token ${token}`,   // needed since LogoutView requires IsAuthenticated

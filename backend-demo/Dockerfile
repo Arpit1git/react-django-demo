@@ -15,9 +15,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 5. Copy Source Code
 COPY . /app/
 
-# 6. Collect Static Files (Commented out until static assets are created)
-# RUN SECRET_KEY="build-dummy-key" DATABASE_URL="sqlite:///:memory:" python manage.py collectstatic --no-input
-
 # 7. Expose Port
 EXPOSE 8000
 

@@ -8,7 +8,6 @@ build/
 # Docker-related files
 Dockerfile
 .dockerignore
-nginx.conf
 
 # Git repository data
 .git/
